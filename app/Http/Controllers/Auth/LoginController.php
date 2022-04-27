@@ -4,7 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
+use \Illuminate\Contracts\Auth\Authenticatable;
 
 class LoginController extends Controller
 {
@@ -40,6 +45,18 @@ class LoginController extends Controller
 
     public function username()
     {
-        return 'mobile';
+        return 'email';
+        $value = request()->input('identify'); // ahmed.emam.dev@gmail  or 293293923293
+        $field = filter_var($value, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+        request()->merge([$field =>$value ]);
+        return  $field;
     }
+
+//    public  function Login(Request $request)
+//    {
+//        $email = $request->input('email');
+//        $password = $request->input('password');
+//        if (Auth::attempt(['email' => $email, 'password' => $password]))
+//            \route('home');
+//    }
 }
